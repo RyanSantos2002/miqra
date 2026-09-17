@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link, useNavigate, useLocation } from 'react-router-dom';
 import {
   ChevronLeft,
   ChevronRight,
@@ -14,20 +14,25 @@ import { DashboardLayout } from '../../../layouts/DashboardLayout/DashboardLayou
 import { VerseExplorerDrawer } from '../../../components/study/VerseExplorer/VerseExplorerDrawer';
 import { getChapter } from '../../../services/bible';
 import { getNotesForChapter } from '../../../services/notes';
+import { getHighlightsForChapter, getFavoritesForChapter } from '../../../services/study';
 import { isSupabaseConfigured } from '../../../lib/supabase';
 import type { BibleChapterData, NormalizedVerse } from '../../../types/bible';
 import type { Note } from '../../../types/notes';
+import type { HighlightColor } from '../../../types/study';
 import styles from './BibleReaderPage.module.css';
 
 export const BibleReaderPage: React.FC = () => {
   const { book: bookSlug, chapter: chapterParam } = useParams<{ book: string; chapter: string }>();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const chapterNumber = parseInt(chapterParam || '1', 10);
   const selectedVersion = 'nvi';
 
   const [chapterData, setChapterData] = useState<BibleChapterData | null>(null);
   const [chapterNotes, setChapterNotes] = useState<Record<number, Note>>({});
+  const [chapterHighlights, setChapterHighlights] = useState<Record<number, HighlightColor>>({});
+  const [chapterFavorites, setChapterFavorites] = useState<Record<number, boolean>>({});
   const [selectedVerse, setSelectedVerse] = useState<NormalizedVerse | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -47,15 +52,37 @@ export const BibleReaderPage: React.FC = () => {
       }
 
       try {
-        const [data, notesMap] = await Promise.all([
+        const [data, notesMap, highlightsMap, favoritesMap] = await Promise.all([
           getChapter(bookSlug, chapterNumber, selectedVersion),
           getNotesForChapter(bookSlug, chapterNumber),
+          getHighlightsForChapter(bookSlug, chapterNumber),
+          getFavoritesForChapter(bookSlug, chapterNumber),
         ]);
+
         if (!isMounted) return;
         setChapterData(data);
         setChapterNotes(notesMap);
+        setChapterHighlights(highlightsMap);
+
+        const favsBoolMap: Record<number, boolean> = {};
+        for (const vStr of Object.keys(favoritesMap)) {
+          favsBoolMap[Number(vStr)] = true;
+        }
+        setChapterFavorites(favsBoolMap);
         setSelectedVerse(null);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        // Se houver âncora de versículo no URL (ex: #v1 ou #verse-1)
+        if (location.hash) {
+          setTimeout(() => {
+            const cleanId = location.hash.replace('#', '');
+            const targetEl = document.getElementById(cleanId);
+            if (targetEl) {
+              targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+          }, 200);
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
       } catch (err: unknown) {
         if (!isMounted) return;
         console.error(`[Miqra] Erro ao carregar capítulo ${bookSlug} ${chapterNumber}:`, err);
@@ -74,7 +101,7 @@ export const BibleReaderPage: React.FC = () => {
     return () => {
       isMounted = false;
     };
-  }, [bookSlug, chapterNumber, selectedVersion]);
+  }, [bookSlug, chapterNumber, selectedVersion, location.hash]);
 
   const handleRetry = () => {
     if (!bookSlug || isNaN(chapterNumber)) return;
@@ -83,10 +110,19 @@ export const BibleReaderPage: React.FC = () => {
     Promise.all([
       getChapter(bookSlug, chapterNumber, selectedVersion),
       getNotesForChapter(bookSlug, chapterNumber),
+      getHighlightsForChapter(bookSlug, chapterNumber),
+      getFavoritesForChapter(bookSlug, chapterNumber),
     ])
-      .then(([data, notesMap]) => {
+      .then(([data, notesMap, highlightsMap, favoritesMap]) => {
         setChapterData(data);
         setChapterNotes(notesMap);
+        setChapterHighlights(highlightsMap);
+
+        const favsBoolMap: Record<number, boolean> = {};
+        for (const vStr of Object.keys(favoritesMap)) {
+          favsBoolMap[Number(vStr)] = true;
+        }
+        setChapterFavorites(favsBoolMap);
         window.scrollTo({ top: 0, behavior: 'smooth' });
       })
       .catch((err) => {
@@ -106,6 +142,29 @@ export const BibleReaderPage: React.FC = () => {
       }
       return next;
     });
+  };
+
+  const handleStudyChange = (
+    verseNum: number,
+    data: { isFavorited?: boolean; highlight?: HighlightColor | null }
+  ) => {
+    if (data.isFavorited !== undefined) {
+      setChapterFavorites((prev) => ({
+        ...prev,
+        [verseNum]: data.isFavorited!,
+      }));
+    }
+    if (data.highlight !== undefined) {
+      setChapterHighlights((prev) => {
+        const next = { ...prev };
+        if (data.highlight) {
+          next[verseNum] = data.highlight;
+        } else {
+          delete next[verseNum];
+        }
+        return next;
+      });
+    }
   };
 
   return (
@@ -185,12 +244,24 @@ export const BibleReaderPage: React.FC = () => {
               ) : (
                 chapterData.verses.map((verse) => {
                   const hasNote = Boolean(chapterNotes[verse.number]);
+                  const isFavorited = Boolean(chapterFavorites[verse.number]);
+                  const highlight = chapterHighlights[verse.number];
                   const isSelected = selectedVerse?.number === verse.number;
+
+                  const highlightClass = highlight === 'gold'
+                    ? styles.highlightGold
+                    : highlight === 'green'
+                    ? styles.highlightGreen
+                    : highlight === 'bronze'
+                    ? styles.highlightBronze
+                    : highlight === 'red'
+                    ? styles.highlightRed
+                    : '';
 
                   return (
                     <p
                       key={verse.number}
-                      className={`${styles.verseParagraph} ${isSelected ? styles.verseSelected : ''} ${hasNote ? styles.verseHasNote : ''}`}
+                      className={`${styles.verseParagraph} ${isSelected ? styles.verseSelected : ''} ${hasNote ? styles.verseHasNote : ''} ${highlightClass}`}
                       id={`v${verse.number}`}
                       onClick={() => setSelectedVerse(verse)}
                       role="button"
@@ -201,9 +272,14 @@ export const BibleReaderPage: React.FC = () => {
                           setSelectedVerse(verse);
                         }
                       }}
-                      title={`Clique para explorar o versículo ${verse.number}${hasNote ? ' (Possui anotação)' : ''}`}
+                      title={`Clique para explorar o versículo ${verse.number}${hasNote ? ' (Possui anotação)' : ''}${isFavorited ? ' (Favoritado)' : ''}`}
                     >
                       <sup className={styles.verseNumber}>
+                        {isFavorited && (
+                          <span className={styles.verseFavoriteIndicator} title="Versículo favoritado">
+                            ★
+                          </span>
+                        )}
                         {verse.number}
                         {hasNote && (
                           <span className={styles.verseNoteIndicator} title="Possui anotação pessoal">
@@ -266,8 +342,11 @@ export const BibleReaderPage: React.FC = () => {
             chapter={chapterData.chapter}
             verseNumber={selectedVerse.number}
             verseText={selectedVerse.text}
+            initialFavorited={Boolean(chapterFavorites[selectedVerse.number])}
+            initialHighlight={chapterHighlights[selectedVerse.number] || null}
             onClose={() => setSelectedVerse(null)}
             onNoteChange={handleNoteChange}
+            onStudyChange={handleStudyChange}
           />
         )}
       </div>

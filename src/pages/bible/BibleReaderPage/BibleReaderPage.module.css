@@ -181,6 +181,42 @@
   background-color: rgba(212, 168, 92, 0.03);
 }
 
+/* Marcações de Estudo (Highlights) */
+.highlightGold {
+  background-color: rgba(212, 168, 92, 0.16) !important;
+  border-left-color: #d4a85c !important;
+}
+
+.highlightGreen {
+  background-color: rgba(104, 182, 132, 0.16) !important;
+  border-left-color: #68b684 !important;
+}
+
+.highlightBronze {
+  background-color: rgba(186, 126, 78, 0.16) !important;
+  border-left-color: #ba7e4e !important;
+}
+
+.highlightRed {
+  background-color: rgba(224, 98, 85, 0.16) !important;
+  border-left-color: #e06255 !important;
+}
+
+/* Pulso de foco para versículo acessado via link */
+.verseParagraph:target {
+  animation: targetHighlight 2.5s ease-out;
+}
+
+@keyframes targetHighlight {
+  0% {
+    box-shadow: 0 0 0 3px rgba(212, 168, 92, 0.5);
+    background-color: rgba(212, 168, 92, 0.25);
+  }
+  100% {
+    box-shadow: none;
+  }
+}
+
 .verseNumber {
   font-family: var(--font-sans);
   font-size: 11.5px;
@@ -192,6 +228,16 @@
   display: inline-flex;
   align-items: center;
   gap: 3px;
+}
+
+.verseFavoriteIndicator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #e4c47a;
+  font-size: 11px;
+  line-height: 1;
+  filter: drop-shadow(0 0 4px rgba(212, 168, 92, 0.6));
 }
 
 .verseNoteIndicator {

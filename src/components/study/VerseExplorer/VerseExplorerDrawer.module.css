@@ -162,6 +162,111 @@
   font-style: normal;
 }
 
+/* Barra de Ações Rápidas (Favorito e Destaque) */
+.quickActionsBar {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: rgba(14, 21, 17, 0.6);
+  border: 1px solid rgba(212, 168, 92, 0.16);
+  border-radius: 9px;
+  padding: 12px 16px;
+}
+
+.quickActionsRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.favoriteBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  color: #a8a090;
+  background: rgba(212, 168, 92, 0.06);
+  border: 1px solid rgba(212, 168, 92, 0.2);
+  cursor: pointer;
+  transition: all 160ms ease;
+}
+
+.favoriteBtn:hover {
+  background: rgba(212, 168, 92, 0.14);
+  color: #f2e9d5;
+  border-color: rgba(212, 168, 92, 0.4);
+}
+
+.favoriteBtnActive {
+  background: rgba(212, 168, 92, 0.18);
+  border-color: #d4a85c;
+  color: #e4c47a;
+  box-shadow: 0 0 12px rgba(212, 168, 92, 0.2);
+}
+
+.highlightSelector {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.highlightLabel {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: #8c8372;
+}
+
+.colorPillsGroup {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.colorPill {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 150ms ease, box-shadow 150ms ease;
+  padding: 0;
+}
+
+.colorPill:hover {
+  transform: scale(1.15);
+}
+
+.colorPillActive {
+  border-color: #ffffff;
+  box-shadow: 0 0 8px currentColor;
+  transform: scale(1.1);
+}
+
+.clearHighlightBtn {
+  background: transparent;
+  border: 1px dashed rgba(212, 168, 92, 0.2);
+  border-radius: 5px;
+  color: #726b5d;
+  font-size: 11px;
+  padding: 4px 8px;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.clearHighlightBtn:hover {
+  color: #e06255;
+  border-color: rgba(224, 98, 85, 0.4);
+}
+
 /* Barra de Abas / Ações */
 .tabsNav {
   display: flex;

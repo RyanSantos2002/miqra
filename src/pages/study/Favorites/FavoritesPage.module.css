@@ -1,0 +1,320 @@
+/* ==========================================================================
+   MIQRA FAVORITES PAGE
+   Estética de relicário e biblioteca bíblica clássica
+   ========================================================================== */
+
+.pageContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  width: 100%;
+  max-width: 920px;
+  margin: 0 auto;
+}
+
+/* Cabeçalho */
+.pageHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(212, 168, 92, 0.14);
+}
+
+.headerInfo h1 {
+  margin: 0 0 6px;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(26px, 2.4vw, 32px);
+  font-weight: 500;
+  color: #f2e9d5;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.headerStarIcon {
+  color: #e4c47a;
+  filter: drop-shadow(0 0 8px rgba(212, 168, 92, 0.5));
+}
+
+.headerInfo p {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  color: #8c8372;
+}
+
+.counterBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(212, 168, 92, 0.1);
+  border: 1px solid rgba(212, 168, 92, 0.25);
+  border-radius: 6px;
+  padding: 6px 12px;
+  color: #e4c47a;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Lista de Favoritos */
+.favoritesList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.favoriteCard {
+  background: linear-gradient(180deg, #0d1410 0%, #080d0a 100%);
+  border: 1px solid rgba(212, 168, 92, 0.18);
+  border-radius: 10px;
+  padding: 22px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: all 160ms ease;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+}
+
+.favoriteCard:hover {
+  border-color: rgba(212, 168, 92, 0.38);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.5);
+}
+
+.cardTopRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.referenceBadgeGroup {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.referenceTitle {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 17px;
+  font-weight: 600;
+  color: #f2e9d5;
+  margin: 0;
+}
+
+.versionPill {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 600;
+  color: #d4a85c;
+  background: rgba(212, 168, 92, 0.12);
+  border: 1px solid rgba(212, 168, 92, 0.22);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.btnRemoveFavorite {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  background: transparent;
+  border: 1px solid rgba(212, 168, 92, 0.15);
+  color: #e4c47a;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.btnRemoveFavorite:hover {
+  background: rgba(224, 98, 85, 0.12);
+  border-color: rgba(224, 98, 85, 0.4);
+  color: #e06255;
+}
+
+.verseQuoteText {
+  margin: 0;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 19.5px;
+  line-height: 1.7;
+  color: #ebdcc2;
+  font-style: italic;
+  border-left: 2px solid rgba(212, 168, 92, 0.35);
+  padding-left: 14px;
+}
+
+.cardBottomRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+  border-top: 1px solid rgba(212, 168, 92, 0.08);
+}
+
+.savedDate {
+  font-family: var(--font-sans);
+  font-size: 11.5px;
+  color: #726b5d;
+}
+
+.btnOpenReader {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(212, 168, 92, 0.1);
+  border: 1px solid rgba(212, 168, 92, 0.25);
+  border-radius: 6px;
+  padding: 7px 14px;
+  color: #e4c47a;
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 160ms ease;
+}
+
+.btnOpenReader:hover {
+  background: rgba(212, 168, 92, 0.22);
+  color: #f2e9d5;
+  border-color: #d4a85c;
+  transform: translateX(2px);
+}
+
+/* Estado Vazio */
+.emptyState {
+  background: rgba(12, 18, 15, 0.6);
+  border: 1px dashed rgba(212, 168, 92, 0.22);
+  border-radius: 12px;
+  padding: 56px 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.emptyIcon {
+  color: #d4a85c;
+  opacity: 0.75;
+  margin-bottom: 6px;
+}
+
+.emptyTitle {
+  font-family: Georgia, serif;
+  font-size: 20px;
+  color: #f2e9d5;
+  margin: 0;
+}
+
+.emptyDescription {
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  color: #8c8372;
+  max-width: 420px;
+  margin: 0;
+  line-height: 1.55;
+}
+
+.btnExploreBible {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(180deg, #d8ac67 0%, #b6853e 100%);
+  border: 1px solid rgba(245, 220, 155, 0.35);
+  border-radius: 6px;
+  padding: 10px 22px;
+  color: #1a140a;
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  font-weight: 600;
+  text-decoration: none;
+  margin-top: 10px;
+  box-shadow: 0 4px 16px rgba(212, 168, 92, 0.25);
+  transition: all 160ms ease;
+}
+
+.btnExploreBible:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+  box-shadow: 0 6px 20px rgba(212, 168, 92, 0.35);
+}
+
+/* Skeletons e Loading */
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.skeletonCard {
+  height: 140px;
+  background: linear-gradient(90deg, #0d1410 25%, #151d18 50%, #0d1410 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 10px;
+  border: 1px solid rgba(212, 168, 92, 0.08);
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Erro */
+.errorBox {
+  background: rgba(26, 12, 12, 0.85);
+  border: 1px solid rgba(224, 98, 85, 0.35);
+  border-radius: 10px;
+  padding: 32px 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.errorTitle {
+  font-family: Georgia, serif;
+  font-size: 18px;
+  color: #f2e9d5;
+  margin: 0;
+}
+
+.errorText {
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  color: #e06255;
+  margin: 0;
+}
+
+.btnRetry {
+  background: rgba(212, 168, 92, 0.1);
+  border: 1px solid rgba(212, 168, 92, 0.3);
+  border-radius: 6px;
+  color: #e4c47a;
+  padding: 8px 18px;
+  font-size: 13px;
+  cursor: pointer;
+  margin-top: 4px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .pageHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .favoriteCard {
+    padding: 16px;
+  }
+
+  .verseQuoteText {
+    font-size: 17.5px;
+  }
+}

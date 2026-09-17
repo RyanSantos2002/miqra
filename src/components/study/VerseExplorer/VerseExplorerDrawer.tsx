@@ -11,9 +11,12 @@ import {
   Edit3,
   AlertCircle,
   Clock,
+  Star,
 } from 'lucide-react';
 import { getNoteForVerse, saveNote, deleteNote } from '../../../services/notes';
+import { toggleFavorite, setHighlight, removeHighlight } from '../../../services/study';
 import type { Note } from '../../../types/notes';
+import type { HighlightColor } from '../../../types/study';
 import styles from './VerseExplorerDrawer.module.css';
 
 interface VerseExplorerDrawerProps {
@@ -23,8 +26,14 @@ interface VerseExplorerDrawerProps {
   verseNumber: number;
   verseText: string;
   isOpen: boolean;
+  initialFavorited?: boolean;
+  initialHighlight?: HighlightColor | null;
   onClose: () => void;
   onNoteChange?: (verseNumber: number, note: Note | null) => void;
+  onStudyChange?: (
+    verseNumber: number,
+    data: { isFavorited?: boolean; highlight?: HighlightColor | null }
+  ) => void;
 }
 
 type ExplorerTab = 'note' | 'favorite' | 'references' | 'words' | 'discussions';
@@ -36,12 +45,18 @@ export const VerseExplorerDrawer: React.FC<VerseExplorerDrawerProps> = ({
   verseNumber,
   verseText,
   isOpen,
+  initialFavorited = false,
+  initialHighlight = null,
   onClose,
   onNoteChange,
+  onStudyChange,
 }) => {
   const [activeTab, setActiveTab] = useState<ExplorerTab>('note');
   const [note, setNote] = useState<Note | null>(null);
   const [content, setContent] = useState('');
+  const [isFavorited, setIsFavorited] = useState<boolean>(initialFavorited);
+  const [highlightColor, setHighlightColor] = useState<HighlightColor | null>(initialHighlight);
+
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -86,6 +101,64 @@ export const VerseExplorerDrawer: React.FC<VerseExplorerDrawerProps> = ({
   }, [isOpen, onClose]);
 
   if (!isOpen) return null;
+
+  const handleToggleFavorite = async () => {
+    try {
+      const res = await toggleFavorite(bookSlug, chapter, verseNumber, verseText);
+      setIsFavorited(res.isFavorited);
+      if (onStudyChange) {
+        onStudyChange(verseNumber, { isFavorited: res.isFavorited });
+      }
+      setSuccessMessage(
+        res.isFavorited ? 'Versículo adicionado aos Favoritos!' : 'Versículo removido dos Favoritos.'
+      );
+      setTimeout(() => setSuccessMessage(null), 2500);
+    } catch (err: unknown) {
+      console.error('[Miqra] Erro ao favoritar:', err);
+      setErrorMessage(err instanceof Error ? err.message : 'Falha ao favoritar versículo.');
+    }
+  };
+
+  const handleSelectHighlight = async (color: HighlightColor) => {
+    try {
+      if (highlightColor === color) {
+        // Clicou na mesma cor: desmarca
+        await removeHighlight(bookSlug, chapter, verseNumber);
+        setHighlightColor(null);
+        if (onStudyChange) {
+          onStudyChange(verseNumber, { highlight: null });
+        }
+        setSuccessMessage('Destaque removido.');
+      } else {
+        await setHighlight(bookSlug, chapter, verseNumber, color);
+        setHighlightColor(color);
+        if (onStudyChange) {
+          onStudyChange(verseNumber, { highlight: color });
+        }
+        setSuccessMessage('Versículo destacado!');
+      }
+      setTimeout(() => setSuccessMessage(null), 2500);
+    } catch (err: unknown) {
+      console.error('[Miqra] Erro ao destacar versículo:', err);
+      setErrorMessage(err instanceof Error ? err.message : 'Falha ao destacar versículo.');
+    }
+  };
+
+  const handleClearHighlight = async () => {
+    if (!highlightColor) return;
+    try {
+      await removeHighlight(bookSlug, chapter, verseNumber);
+      setHighlightColor(null);
+      if (onStudyChange) {
+        onStudyChange(verseNumber, { highlight: null });
+      }
+      setSuccessMessage('Destaque removido.');
+      setTimeout(() => setSuccessMessage(null), 2500);
+    } catch (err: unknown) {
+      console.error('[Miqra] Erro ao limpar destaque:', err);
+      setErrorMessage(err instanceof Error ? err.message : 'Falha ao limpar marcação.');
+    }
+  };
 
   const handleSaveNote = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -201,6 +274,87 @@ export const VerseExplorerDrawer: React.FC<VerseExplorerDrawerProps> = ({
             </p>
           </div>
 
+          {/* Barra de Ações Rápidas (Favoritar & Marcação de Cor) */}
+          <div className={styles.quickActionsBar}>
+            <div className={styles.quickActionsRow}>
+              {/* Botão de Favoritar */}
+              <button
+                type="button"
+                className={`${styles.favoriteBtn} ${isFavorited ? styles.favoriteBtnActive : ''}`}
+                onClick={handleToggleFavorite}
+                title={isFavorited ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}
+              >
+                <Star
+                  size={16}
+                  fill={isFavorited ? '#e4c47a' : 'transparent'}
+                  stroke={isFavorited ? '#e4c47a' : 'currentColor'}
+                />
+                <span>{isFavorited ? '★ Favoritado' : '☆ Favoritar'}</span>
+              </button>
+
+              {/* Seletor de Marcação / Destaque */}
+              <div className={styles.highlightSelector}>
+                <span className={styles.highlightLabel}>Marcar:</span>
+                <div className={styles.colorPillsGroup}>
+                  <button
+                    type="button"
+                    className={`${styles.colorPill} ${highlightColor === 'gold' ? styles.colorPillActive : ''}`}
+                    style={{ backgroundColor: '#d4a85c', color: '#d4a85c' }}
+                    onClick={() => handleSelectHighlight('gold')}
+                    title="Dourado"
+                    aria-label="Marcar em dourado"
+                  >
+                    {highlightColor === 'gold' && <Check size={13} color="#1a140a" strokeWidth={3} />}
+                  </button>
+
+                  <button
+                    type="button"
+                    className={`${styles.colorPill} ${highlightColor === 'green' ? styles.colorPillActive : ''}`}
+                    style={{ backgroundColor: '#68b684', color: '#68b684' }}
+                    onClick={() => handleSelectHighlight('green')}
+                    title="Verde"
+                    aria-label="Marcar em verde"
+                  >
+                    {highlightColor === 'green' && <Check size={13} color="#08140e" strokeWidth={3} />}
+                  </button>
+
+                  <button
+                    type="button"
+                    className={`${styles.colorPill} ${highlightColor === 'bronze' ? styles.colorPillActive : ''}`}
+                    style={{ backgroundColor: '#ba7e4e', color: '#ba7e4e' }}
+                    onClick={() => handleSelectHighlight('bronze')}
+                    title="Bronze"
+                    aria-label="Marcar em bronze"
+                  >
+                    {highlightColor === 'bronze' && <Check size={13} color="#1c0f05" strokeWidth={3} />}
+                  </button>
+
+                  <button
+                    type="button"
+                    className={`${styles.colorPill} ${highlightColor === 'red' ? styles.colorPillActive : ''}`}
+                    style={{ backgroundColor: '#e06255', color: '#e06255' }}
+                    onClick={() => handleSelectHighlight('red')}
+                    title="Vermelho"
+                    aria-label="Marcar em vermelho"
+                  >
+                    {highlightColor === 'red' && <Check size={13} color="#ffffff" strokeWidth={3} />}
+                  </button>
+
+                  {highlightColor && (
+                    <button
+                      type="button"
+                      className={styles.clearHighlightBtn}
+                      onClick={handleClearHighlight}
+                      title="Limpar marcação"
+                    >
+                      Limpar
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* Abas de Navegação das Ações */}
           <nav className={styles.tabsNav} aria-label="Ações de estudo do versículo">
             <button
@@ -218,7 +372,7 @@ export const VerseExplorerDrawer: React.FC<VerseExplorerDrawerProps> = ({
               onClick={() => setActiveTab('favorite')}
             >
               <Bookmark size={14} />
-              <span>Favoritar</span>
+              <span>Sobre Favoritos</span>
             </button>
 
             <button
@@ -391,13 +545,15 @@ export const VerseExplorerDrawer: React.FC<VerseExplorerDrawerProps> = ({
             </section>
           )}
 
-          {/* Abas Futuras Preparadas (Sem dados fictícios) */}
+          {/* Aba Informativa de Favoritos */}
           {activeTab === 'favorite' && (
             <div className={styles.placeholderCard}>
               <Bookmark size={28} className={styles.placeholderIcon} />
               <h4 className={styles.placeholderTitle}>Versículos Favoritos</h4>
               <p className={styles.placeholderText}>
-                Em breve você poderá salvar este versículo na sua coleção de passagens favoritas e organizá-lo por temas e momentos de reflexão.
+                {isFavorited
+                  ? 'Este versículo está salvo nos seus favoritos! Você pode acessá-lo a qualquer momento no menu "Favoritos".'
+                  : 'Clique no botão "☆ Favoritar" acima para guardar este versículo em sua coleção sagrada.'}
               </p>
             </div>
           )}
