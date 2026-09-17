@@ -1,0 +1,62 @@
+/* ==========================================================================
+   MIQRA HOMEPAGE COMPONENT
+   Layout cinematográfico, espaçoso e com harmonia visual
+   ========================================================================== */
+
+.homeContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  width: 100%;
+}
+
+.heroSection {
+  width: 100%;
+}
+
+.quickAccessSection {
+  width: 100%;
+}
+
+/* Grid Principal em 2 Colunas */
+.mainContentGrid {
+  display: grid;
+  grid-template-columns: 1fr 390px;
+  gap: 32px;
+  align-items: start;
+}
+
+.primaryColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  min-width: 0;
+}
+
+.secondaryColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  min-width: 0;
+}
+
+/* ==========================================================================
+   RESPONSIVIDADE
+   ========================================================================== */
+@media (max-width: 1120px) {
+  .mainContentGrid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
+@media (max-width: 768px) {
+  .homeContainer {
+    gap: 28px;
+  }
+
+  .primaryColumn,
+  .secondaryColumn {
+    gap: 24px;
+  }
+}

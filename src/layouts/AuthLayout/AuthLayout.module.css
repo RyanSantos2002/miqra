@@ -1,0 +1,361 @@
+/* ==========================================================================
+   MIQRA AUTH LAYOUT
+   Preenchimento 100% total da tela, sem barras pretas laterais
+   ========================================================================== */
+
+.authPage {
+  flex: 1;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 100vh;
+  min-height: 100dvh;
+
+  margin: 0;
+  padding: 0;
+
+  display: grid;
+  grid-template-columns: 58% 42%;
+
+  overflow: hidden;
+
+  background: #060a08;
+  box-sizing: border-box;
+}
+
+/* ==========================================================================
+   PAINEL VISUAL ESQUERDO
+   ========================================================================== */
+.authVisual {
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+
+  min-width: 0;
+  min-height: 0;
+
+  background-image: url('/assets/miqra-login.jpg');
+  background-size: cover;
+  background-position: center 30%;
+
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: space-between;
+
+  padding: 56px 64px;
+
+  box-sizing: border-box;
+}
+
+.visualOverlay {
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      to right,
+      rgba(6, 10, 8, 0.35) 0%,
+      rgba(6, 10, 8, 0.06) 40%,
+      rgba(6, 10, 8, 0.95) 100%
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(6, 10, 8, 0.5) 0%,
+      transparent 35%,
+      rgba(6, 10, 8, 0.85) 100%
+    );
+
+  pointer-events: none;
+}
+
+/* Marca Miqra */
+.brand {
+  position: relative;
+  z-index: 2;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  user-select: none;
+}
+
+.brandHeader {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.brandMark {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brandLogoImg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.7));
+}
+
+.brandName {
+  color: #f2e9d5;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(38px, 3.8vw, 54px);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.75);
+}
+
+.brandTagline {
+  margin-top: 12px;
+  color: #c9ad72;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.75);
+}
+
+/* Citação Bíblica */
+.scriptureQuote {
+  position: relative;
+  z-index: 2;
+
+  display: flex;
+  align-items: stretch;
+
+  max-width: 460px;
+  margin-bottom: 8px;
+  gap: 18px;
+}
+
+.quoteLine {
+  width: 2px;
+  flex-shrink: 0;
+  background: #d4a85c;
+  box-shadow: 0 0 12px rgba(212, 168, 92, 0.4);
+}
+
+.quoteContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.quoteContent p {
+  margin: 0 0 12px;
+  color: #f2e9d5;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 16px;
+  font-style: italic;
+  line-height: 1.55;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+.quoteContent span {
+  color: #d4a85c;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   PAINEL DIREITO DE AUTENTICAÇÃO
+   ========================================================================== */
+.authPanel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  min-width: 0;
+  min-height: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 32px 40px;
+
+  box-sizing: border-box;
+
+  background:
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(212, 168, 92, 0.04) 0%,
+      transparent 65%
+    ),
+    #060a08;
+
+  overflow-y: auto;
+}
+
+/* Botão de Tema no Topo Direito */
+.themeToggle {
+  position: absolute;
+  top: 24px;
+  right: 28px;
+  z-index: 10;
+
+  background: transparent;
+  border: none;
+  color: #d4a85c;
+
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  opacity: 0.8;
+  transition: all 180ms ease;
+}
+
+.themeToggle:hover {
+  opacity: 1;
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 8px rgba(212, 168, 92, 0.5));
+}
+
+/* Card com Moldura de Códex Antigo */
+.authCard {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+
+  padding: 44px 40px;
+
+  box-sizing: border-box;
+
+  background:
+    linear-gradient(
+      165deg,
+      rgba(15, 20, 17, 0.96) 0%,
+      rgba(8, 12, 10, 0.98) 100%
+    );
+
+  border: 1px solid rgba(212, 168, 92, 0.25);
+  border-radius: 12px;
+
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.65),
+    inset 0 1px 0 rgba(228, 196, 122, 0.06);
+}
+
+/* Cantos Ornamentados de Manuscrito */
+.corner {
+  position: absolute;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.cornerTopLeft {
+  top: 2px;
+  left: 2px;
+}
+
+.cornerTopRight {
+  top: 2px;
+  right: 2px;
+  transform: scaleX(-1);
+}
+
+.cornerBottomLeft {
+  bottom: 2px;
+  left: 2px;
+  transform: scaleY(-1);
+}
+
+.cornerBottomRight {
+  bottom: 2px;
+  right: 2px;
+  transform: scale(-1);
+}
+
+/* ==========================================================================
+   RESPONSIVIDADE
+   ========================================================================== */
+@media (max-width: 1100px) {
+  .authPage {
+    grid-template-columns: 50% 50%;
+  }
+
+  .authVisual {
+    padding: 40px;
+  }
+
+  .authPanel {
+    padding: 24px 20px;
+  }
+
+  .authCard {
+    padding: 36px 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .authPage {
+    display: block;
+    height: auto;
+    min-height: 100dvh;
+    overflow-y: auto;
+  }
+
+  .authVisual {
+    height: 220px;
+    min-height: 220px;
+    padding: 24px;
+    background-position: center 30%;
+  }
+
+  .brandHeader {
+    gap: 12px;
+  }
+
+  .brandMark {
+    width: 38px;
+    height: 38px;
+  }
+
+  .brandName {
+    font-size: 32px;
+  }
+
+  .brandTagline {
+    margin-top: 6px;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+  }
+
+  .scriptureQuote {
+    display: none;
+  }
+
+  .authPanel {
+    padding: 24px 16px 40px;
+    min-height: calc(100dvh - 220px);
+    overflow: visible;
+  }
+
+  .authCard {
+    width: 100%;
+    padding: 32px 22px;
+    border-radius: 12px;
+  }
+
+  .themeToggle {
+    top: 16px;
+    right: 16px;
+  }
+}

@@ -1,0 +1,96 @@
+/* ==========================================================================
+   MIQRA STUDY JOURNEY COMPONENT
+   Estatísticas de estudo sóbrias e elegantes
+   ========================================================================== */
+
+.sectionContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sectionHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sectionTitle {
+  margin: 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 19px;
+  font-weight: 500;
+  color: #f2e9d5;
+  letter-spacing: -0.01em;
+}
+
+.sectionCaption {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: #7a7263;
+}
+
+.metricsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.metricCard {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background-color: #0c120f;
+  border: 1px solid rgba(212, 168, 92, 0.12);
+  border-radius: 9px;
+  transition: all 160ms ease;
+}
+
+.metricCard:hover {
+  background-color: #111814;
+  border-color: rgba(212, 168, 92, 0.28);
+}
+
+.iconContainer {
+  width: 36px;
+  height: 36px;
+  border-radius: 7px;
+  background: rgba(212, 168, 92, 0.08);
+  border: 1px solid rgba(212, 168, 92, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #d4a85c;
+  flex-shrink: 0;
+}
+
+.metricContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.metricValue {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: #f2e9d5;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.metricLabel {
+  margin-top: 3px;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  color: #8f8776;
+}
+
+/* ==========================================================================
+   RESPONSIVIDADE
+   ========================================================================== */
+@media (max-width: 480px) {
+  .metricsGrid {
+    grid-template-columns: 1fr;
+  }
+}

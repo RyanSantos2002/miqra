@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" fill="none">
+  <rect width="48" height="48" rx="10" fill="#080D0B"/>
+  <rect x="1" y="1" width="46" height="46" rx="9" stroke="#D4A85C" stroke-opacity="0.25" stroke-width="1.5"/>
+  <!-- Ancient Codex / Stylized 'M' Mark -->
+  <path d="M12 34V15.5C12 14.5 13 14 14 14.5L24 20L34 14.5C35 14 36 14.5 36 15.5V34" stroke="#D4A85C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M24 20V37" stroke="#E4C47A" stroke-width="2" stroke-linecap="round"/>
+  <path d="M15 31L24 35.5L33 31" stroke="#967342" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="24" cy="11.5" r="1.5" fill="#E4C47A"/>
+</svg>

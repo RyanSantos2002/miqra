@@ -1,0 +1,347 @@
+/* ==========================================================================
+   MIQRA BIBLE BOOK PAGE
+   Seleção de capítulos com estética refinada de manuscrito
+   ========================================================================== */
+
+.pageContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
+/* Breadcrumb */
+.breadcrumbNav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #a8a090;
+  text-decoration: none;
+  transition: color 150ms ease;
+}
+
+.backLink:hover {
+  color: #e4c47a;
+  text-decoration: none;
+}
+
+.breadcrumbSeparator {
+  color: #635c4f;
+}
+
+.breadcrumbCurrent {
+  color: #d4a85c;
+  font-weight: 500;
+}
+
+/* Card do Cabeçalho do Livro */
+.bookHeaderCard {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 32px 36px;
+  background:
+    radial-gradient(
+      circle at 90% 20%,
+      rgba(212, 168, 92, 0.06) 0%,
+      transparent 60%
+    ),
+    linear-gradient(165deg, #121915 0%, #0d130f 100%);
+  border: 1px solid rgba(212, 168, 92, 0.22);
+  border-radius: 12px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+}
+
+.headerTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.badgesGroup {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.testamentBadge,
+.categoryBadge,
+.versionBadge {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  padding: 3px 9px;
+  border-radius: 999px;
+}
+
+.testamentBadge {
+  background: rgba(212, 168, 92, 0.1);
+  border: 1px solid rgba(212, 168, 92, 0.22);
+  color: #e4c47a;
+}
+
+.categoryBadge {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(212, 168, 92, 0.14);
+  color: #b5ad9e;
+}
+
+.versionBadge {
+  background: rgba(104, 182, 132, 0.12);
+  border: 1px solid rgba(104, 182, 132, 0.3);
+  color: #68b684;
+  font-weight: 600;
+}
+
+.totalBadge {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: #8c8372;
+}
+
+.headerMain {
+  display: flex;
+  flex-direction: column;
+}
+
+.bookTitle {
+  margin: 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(32px, 3.2vw, 44px);
+  font-weight: 500;
+  color: #f2e9d5;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+
+.bookSubtitle {
+  margin: 6px 0 0;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: #a8a090;
+}
+
+.headerCta {
+  margin-top: 6px;
+}
+
+.startReadingBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(180deg, #d8ac67 0%, #c4944b 45%, #b6853e 100%);
+  border: 1px solid rgba(245, 220, 155, 0.4);
+  border-radius: 7px;
+  padding: 11px 22px;
+  color: #1a140a;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 14.5px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 18px rgba(212, 168, 92, 0.22);
+  transition: all 160ms ease;
+}
+
+.startReadingBtn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+  box-shadow: 0 6px 24px rgba(212, 168, 92, 0.35);
+}
+
+/* Seção de Capítulos */
+.chaptersSection {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 6px;
+}
+
+.sectionHeading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.sectionTitle {
+  margin: 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 20px;
+  font-weight: 500;
+  color: #f2e9d5;
+}
+
+.sectionCount {
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  color: #7a7263;
+}
+
+.chaptersGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(76px, 1fr));
+  gap: 10px;
+}
+
+.chapterTile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 72px;
+  background-color: #0c120f;
+  border: 1px solid rgba(212, 168, 92, 0.14);
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 150ms ease;
+}
+
+.chapterTile:hover {
+  background-color: #141d18;
+  border-color: #d4a85c;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+  text-decoration: none;
+}
+
+.chapterNumber {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: #f2e9d5;
+  line-height: 1;
+}
+
+.chapterTile:hover .chapterNumber {
+  color: #e4c47a;
+}
+
+.chapterLabel {
+  margin-top: 4px;
+  font-family: var(--font-sans);
+  font-size: 10px;
+  color: #6e6758;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* Loading & Skeletons */
+.loadingState {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.skeletonHeader {
+  height: 180px;
+  background: #0c120f;
+  border: 1px solid rgba(212, 168, 92, 0.1);
+  border-radius: 12px;
+}
+
+.skeletonChaptersGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(76px, 1fr));
+  gap: 10px;
+}
+
+.skeletonChapterTile {
+  height: 72px;
+  background: #0c120f;
+  border: 1px solid rgba(212, 168, 92, 0.08);
+  border-radius: 8px;
+}
+
+/* Erro */
+.errorCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 48px 24px;
+  background-color: #0c120f;
+  border: 1px solid rgba(224, 98, 85, 0.3);
+  border-radius: 12px;
+  gap: 12px;
+}
+
+.errorIcon {
+  color: #e06255;
+}
+
+.errorTitle {
+  margin: 0;
+  font-family: Georgia, serif;
+  font-size: 22px;
+  color: #f2e9d5;
+}
+
+.errorText {
+  margin: 0;
+  color: #a8a090;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  max-width: 500px;
+}
+
+.errorActions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.backToBibleBtn {
+  background-color: rgba(212, 168, 92, 0.1);
+  border: 1px solid rgba(212, 168, 92, 0.3);
+  color: #e4c47a;
+  padding: 8px 18px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+.retryBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: 1px solid rgba(212, 168, 92, 0.2);
+  color: #f2e9d5;
+  padding: 8px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+/* ==========================================================================
+   RESPONSIVIDADE
+   ========================================================================== */
+@media (max-width: 600px) {
+  .bookHeaderCard {
+    padding: 24px 20px;
+  }
+
+  .chaptersGrid {
+    grid-template-columns: repeat(auto-fill, minmax(62px, 1fr));
+    gap: 8px;
+  }
+
+  .chapterTile {
+    height: 64px;
+  }
+
+  .chapterNumber {
+    font-size: 18px;
+  }
+}

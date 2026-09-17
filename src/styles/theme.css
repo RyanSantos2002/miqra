@@ -1,0 +1,64 @@
+:root {
+  /* ==========================================================================
+     PALETA DE CORES — MIQRA DESIGN SYSTEM
+     Identidade visual: Biblioteca Antiga + Manuscritos Bíblicos + Tecnologia Moderna
+     ========================================================================== */
+
+  /* Backgrounds */
+  --bg-primary: #080D0B;
+  --bg-secondary: #101612;
+  --bg-card: #141A15;
+  --bg-card-elevated: #1A211B;
+  --bg-input: rgba(16, 22, 18, 0.75);
+  --bg-input-focus: rgba(20, 26, 21, 0.95);
+
+  /* Tons Dourados & Metais Antigos */
+  --gold-primary: #D4A85C;
+  --gold-light: #E4C47A;
+  --gold-hover: #DFB86E;
+  --gold-parchment: #C9AD72;
+  --bronze: #967342;
+  --bronze-dark: #6E532B;
+
+  /* Textos */
+  --text-primary: #F2E9D5;
+  --text-secondary: #AAA18D;
+  --text-muted: #7A7263;
+  --text-gold: #E4C47A;
+
+  /* Bordas */
+  --border-subtle: rgba(212, 168, 92, 0.12);
+  --border-medium: rgba(212, 168, 92, 0.24);
+  --border-focus: rgba(212, 168, 92, 0.55);
+  --border-error: rgba(224, 98, 85, 0.6);
+
+  /* Feedback & Estados */
+  --color-error: #E06255;
+  --color-error-bg: rgba(224, 98, 85, 0.1);
+  --color-success: #68B684;
+  --color-success-bg: rgba(104, 182, 132, 0.1);
+
+  /* Tipografia */
+  --font-serif: 'Cinzel', Georgia, serif;
+  --font-scripture: 'Cormorant Garamond', Garamond, serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Sombras & Brilhos Sutis */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.6);
+  --shadow-gold-glow: 0 0 20px rgba(212, 168, 92, 0.15);
+  --shadow-gold-focus: 0 0 0 3px rgba(212, 168, 92, 0.15);
+
+  /* Raios de Arredondamento */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+
+  /* Transições */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 350ms cubic-bezier(0.16, 1, 0.3, 1);
+}

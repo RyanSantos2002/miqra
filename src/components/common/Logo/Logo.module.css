@@ -1,0 +1,115 @@
+.logoContainer {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  user-select: none;
+  text-decoration: none;
+}
+
+.horizontal {
+  flex-direction: row;
+}
+
+.vertical {
+  flex-direction: column;
+  text-align: center;
+  gap: 16px;
+}
+
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex-shrink: 0;
+  transition: transform var(--transition-normal);
+}
+
+.logoContainer:hover .iconWrapper {
+  transform: translateY(-1px);
+}
+
+.svgIcon {
+  display: block;
+  filter: drop-shadow(0 0 12px rgba(212, 168, 92, 0.2));
+}
+
+.haloCircle {
+  fill: #080D0B;
+  stroke: rgba(212, 168, 92, 0.2);
+  stroke-width: 1;
+}
+
+.textWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.brandName {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 0.22em;
+  line-height: 1;
+  background: linear-gradient(135deg, #F2E9D5 20%, #D4A85C 80%, #967342 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.tagline {
+  font-family: var(--font-scripture);
+  font-style: italic;
+  color: var(--gold-parchment);
+  letter-spacing: 0.05em;
+  margin-top: 4px;
+}
+
+/* Tamanhos */
+.sm .svgIcon {
+  width: 28px;
+  height: 28px;
+}
+.sm .brandName {
+  font-size: 1.1rem;
+}
+.sm .tagline {
+  font-size: 0.75rem;
+}
+
+.md .svgIcon {
+  width: 38px;
+  height: 38px;
+}
+.md .brandName {
+  font-size: 1.45rem;
+}
+.md .tagline {
+  font-size: 0.85rem;
+}
+
+.lg .svgIcon {
+  width: 48px;
+  height: 48px;
+}
+.lg .brandName {
+  font-size: 1.85rem;
+  letter-spacing: 0.25em;
+}
+.lg .tagline {
+  font-size: 0.95rem;
+  margin-top: 6px;
+}
+
+.xl .svgIcon {
+  width: 64px;
+  height: 64px;
+}
+.xl .brandName {
+  font-size: 2.4rem;
+  letter-spacing: 0.28em;
+}
+.xl .tagline {
+  font-size: 1.1rem;
+  margin-top: 8px;
+}

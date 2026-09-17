@@ -1,0 +1,77 @@
+/* ==========================================================================
+   MIQRA DASHBOARD LAYOUT
+   Estrutura de tela inteira com sidebar fixa e viewport equilibrada
+   ========================================================================== */
+
+.dashboardContainer {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background-color: #080d0b;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.mainScrollArea {
+  flex: 1;
+  height: 100vh;
+  height: 100dvh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Scrollbar com tema escuro e detalhes em ouro envelhecido */
+.mainScrollArea::-webkit-scrollbar {
+  width: 8px;
+}
+
+.mainScrollArea::-webkit-scrollbar-track {
+  background: #080d0b;
+}
+
+.mainScrollArea::-webkit-scrollbar-thumb {
+  background: rgba(212, 168, 92, 0.18);
+  border-radius: 999px;
+}
+
+.mainScrollArea::-webkit-scrollbar-thumb:hover {
+  background: rgba(212, 168, 92, 0.35);
+}
+
+.contentWrapper {
+  width: 100%;
+  max-width: 1380px;
+  margin: 0 auto;
+  padding: 24px 36px 56px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.pageMain {
+  display: flex;
+  flex-direction: column;
+  padding-top: 28px;
+}
+
+/* ==========================================================================
+   RESPONSIVIDADE
+   ========================================================================== */
+@media (max-width: 960px) {
+  .contentWrapper {
+    padding: 20px 24px 40px;
+  }
+}
+
+@media (max-width: 600px) {
+  .contentWrapper {
+    padding: 16px 16px 36px;
+  }
+
+  .pageMain {
+    padding-top: 20px;
+  }
+}

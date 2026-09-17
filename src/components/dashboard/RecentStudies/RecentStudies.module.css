@@ -1,0 +1,214 @@
+/* ==========================================================================
+   MIQRA RECENT STUDIES COMPONENT
+   Lista sóbria e aprofundada de estudos teológicos
+   ========================================================================== */
+
+.sectionContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sectionTitle {
+  margin: 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 20px;
+  font-weight: 500;
+  color: #f2e9d5;
+  letter-spacing: -0.01em;
+}
+
+.sectionBadge {
+  font-family: var(--font-sans);
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: #bfa168;
+  background: rgba(212, 168, 92, 0.08);
+  border: 1px solid rgba(212, 168, 92, 0.18);
+  padding: 3px 8px;
+  border-radius: 999px;
+}
+
+.viewAllLink {
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  color: #d4a85c;
+  text-decoration: none;
+  transition: color 150ms ease;
+}
+
+.viewAllLink:hover {
+  color: #f2e9d5;
+  text-decoration: underline;
+}
+
+.studiesList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.studyCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px 22px;
+  background-color: #0d1410;
+  border: 1px solid rgba(212, 168, 92, 0.12);
+  border-radius: 9px;
+  transition: all 180ms ease;
+  box-sizing: border-box;
+}
+
+.studyCard:hover {
+  background-color: #121a15;
+  border-color: rgba(212, 168, 92, 0.28);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+}
+
+.studyMain {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.metaTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.referenceTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(212, 168, 92, 0.09);
+  border: 1px solid rgba(212, 168, 92, 0.22);
+  padding: 3px 9px;
+  border-radius: 5px;
+  color: #e4c47a;
+  font-family: var(--font-sans);
+  font-size: 11.5px;
+  font-weight: 500;
+}
+
+.timeAgo {
+  font-family: var(--font-sans);
+  font-size: 11.5px;
+  color: #726b5d;
+}
+
+.studyTitle {
+  margin: 2px 0 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 16.5px;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.studyTitleLink {
+  color: #f2e9d5;
+  text-decoration: none;
+  transition: color 150ms ease;
+}
+
+.studyTitleLink:hover {
+  color: #e4c47a;
+  text-decoration: none;
+}
+
+.studyExcerpt {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  line-height: 1.5;
+  color: #a39c8c;
+}
+
+.studyFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(212, 168, 92, 0.08);
+}
+
+.authorMeta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.authorAvatar {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(212, 168, 92, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #d4a85c;
+}
+
+.authorName {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: #8c8474;
+}
+
+.referencesCount {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-sans);
+  font-size: 11.5px;
+  color: #7a7364;
+}
+
+.readMoreBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #d4a85c;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 150ms ease;
+}
+
+.readMoreBtn:hover {
+  color: #f2e9d5;
+  transform: translateX(1px);
+  text-decoration: none;
+}
+
+/* ==========================================================================
+   RESPONSIVIDADE
+   ========================================================================== */
+@media (max-width: 600px) {
+  .sectionHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .studyFooter {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+}

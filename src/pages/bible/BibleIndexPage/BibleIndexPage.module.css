@@ -1,0 +1,516 @@
+/* ==========================================================================
+   MIQRA BIBLE INDEX PAGE
+   Catálogo dos livros canônicos com dados reais do Supabase
+   ========================================================================== */
+
+.pageContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  width: 100%;
+}
+
+.pageHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.headerTitleArea {
+  display: flex;
+  flex-direction: column;
+}
+
+.badgeWrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #c9ad72;
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  margin-bottom: 6px;
+}
+
+.title {
+  margin: 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(26px, 2.4vw, 34px);
+  font-weight: 500;
+  color: #f2e9d5;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+.subtitle {
+  margin: 6px 0 0;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: #a39b8b;
+  max-width: 600px;
+  line-height: 1.5;
+}
+
+/* Seletor de Versão */
+.versionSelectorArea {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #0e1511;
+  border: 1px solid rgba(212, 168, 92, 0.2);
+  border-radius: 8px;
+  padding: 6px 14px;
+}
+
+.versionLabel {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: #8f8776;
+}
+
+.versionSelect {
+  background: transparent;
+  border: none;
+  color: #e4c47a;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+}
+
+.versionSelect option {
+  background-color: #101612;
+  color: #f2e9d5;
+}
+
+/* Banner de Setup do Supabase */
+.setupBanner {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  background: linear-gradient(135deg, rgba(212, 168, 92, 0.08) 0%, rgba(15, 22, 18, 0.95) 100%);
+  border: 1px solid rgba(212, 168, 92, 0.35);
+  border-radius: 10px;
+  padding: 22px 26px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.setupIconArea {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background: rgba(212, 168, 92, 0.12);
+  border: 1px solid rgba(212, 168, 92, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.setupIcon {
+  color: #e4c47a;
+}
+
+.setupContent {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.setupTitle {
+  margin: 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 18px;
+  font-weight: 500;
+  color: #f2e9d5;
+}
+
+.setupText {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: #b5ad9e;
+  line-height: 1.5;
+}
+
+.setupText code {
+  color: #e4c47a;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.envCodeBlock {
+  background: rgba(4, 8, 6, 0.85);
+  border: 1px solid rgba(212, 168, 92, 0.2);
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin: 6px 0 10px;
+}
+
+.envCodeBlock code {
+  font-family: monospace;
+  font-size: 12.5px;
+  color: #e4c47a;
+  line-height: 1.6;
+  display: block;
+}
+
+.retryBtn {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(180deg, #d8ac67 0%, #b6853e 100%);
+  border: 1px solid rgba(245, 220, 155, 0.35);
+  border-radius: 6px;
+  padding: 8px 18px;
+  color: #1a140a;
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 160ms ease;
+}
+
+.retryBtn:hover {
+  filter: brightness(1.06);
+  transform: translateY(-1px);
+}
+
+/* Banner de Erro */
+.errorBanner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: rgba(224, 98, 85, 0.12);
+  border: 1px solid rgba(224, 98, 85, 0.35);
+  border-radius: 8px;
+  padding: 14px 18px;
+  color: #e06255;
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+}
+
+.retryBtnInline {
+  margin-left: auto;
+  background: transparent;
+  border: 1px solid rgba(224, 98, 85, 0.4);
+  color: #f2e9d5;
+  padding: 4px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+/* Barra de Controles (Busca e Abas de Testamento) */
+.controlsBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.searchBox {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 340px;
+  max-width: 100%;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 14px;
+  color: #8c826f;
+  pointer-events: none;
+}
+
+.searchInput {
+  width: 100%;
+  height: 42px;
+  background: #0d1410;
+  border: 1px solid rgba(212, 168, 92, 0.18);
+  border-radius: 8px;
+  padding: 0 36px 0 40px;
+  color: #f2e9d5;
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  outline: none;
+  transition: all 160ms ease;
+}
+
+.searchInput:focus {
+  background: #111a14;
+  border-color: #d4a85c;
+  box-shadow: 0 0 0 2px rgba(212, 168, 92, 0.12);
+}
+
+.clearSearchBtn {
+  position: absolute;
+  right: 12px;
+  background: transparent;
+  border: none;
+  color: #8c826f;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.testamentTabs {
+  display: inline-flex;
+  background-color: #0b110e;
+  border: 1px solid rgba(212, 168, 92, 0.14);
+  border-radius: 8px;
+  padding: 3px;
+  gap: 4px;
+}
+
+.tabBtn {
+  background: transparent;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  color: #948c7b;
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.tabBtn:hover {
+  color: #f2e9d5;
+}
+
+.tabActive {
+  background: rgba(212, 168, 92, 0.12);
+  color: #e4c47a;
+  font-weight: 600;
+  border: 1px solid rgba(212, 168, 92, 0.22);
+}
+
+/* Pílulas de Categoria */
+.categoryPills {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 10px 0;
+  border-top: 1px solid rgba(212, 168, 92, 0.06);
+}
+
+.categoryLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-sans);
+  font-size: 11.5px;
+  color: #726b5d;
+  margin-right: 4px;
+}
+
+.pillBtn {
+  background: #0c120f;
+  border: 1px solid rgba(212, 168, 92, 0.12);
+  border-radius: 999px;
+  padding: 4px 12px;
+  color: #8f8776;
+  font-family: var(--font-sans);
+  font-size: 11.5px;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.pillBtn:hover {
+  background: #121a15;
+  color: #f2e9d5;
+  border-color: rgba(212, 168, 92, 0.25);
+}
+
+.pillActive {
+  background: rgba(212, 168, 92, 0.14);
+  border-color: rgba(212, 168, 92, 0.4);
+  color: #e4c47a;
+  font-weight: 500;
+}
+
+/* Seção e Grade de Livros */
+.booksSection {
+  width: 100%;
+}
+
+.booksGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 16px;
+}
+
+.bookCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 18px 20px;
+  background-color: #0c120f;
+  border: 1px solid rgba(212, 168, 92, 0.13);
+  border-radius: 9px;
+  text-decoration: none;
+  transition: all 180ms ease;
+  min-height: 125px;
+  box-sizing: border-box;
+}
+
+.bookCard:hover {
+  background-color: #121a15;
+  border-color: rgba(212, 168, 92, 0.38);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  text-decoration: none;
+}
+
+.bookCardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.bookAbbrev {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 700;
+  color: #d4a85c;
+  background: rgba(212, 168, 92, 0.1);
+  padding: 2px 7px;
+  border-radius: 4px;
+  border: 1px solid rgba(212, 168, 92, 0.2);
+}
+
+.bookCategory {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  color: #7a7263;
+}
+
+.bookName {
+  margin: 10px 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 18px;
+  font-weight: 500;
+  color: #f2e9d5;
+  line-height: 1.25;
+}
+
+.bookCard:hover .bookName {
+  color: #e4c47a;
+}
+
+.bookCardBottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+  border-top: 1px solid rgba(212, 168, 92, 0.07);
+}
+
+.chaptersCount {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: #948c7b;
+}
+
+.cardArrow {
+  color: #726b5d;
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: all 160ms ease;
+}
+
+.bookCard:hover .cardArrow {
+  opacity: 1;
+  color: #d4a85c;
+  transform: translateX(0);
+}
+
+/* Skeleton Loading */
+.loadingGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 16px;
+}
+
+.skeletonCard {
+  height: 125px;
+  background: linear-gradient(90deg, #0c120f 25%, #151d18 50%, #0c120f 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 9px;
+  border: 1px solid rgba(212, 168, 92, 0.08);
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Estado Vazio */
+.emptyState {
+  padding: 48px 24px;
+  text-align: center;
+  background-color: #0c120f;
+  border: 1px dashed rgba(212, 168, 92, 0.2);
+  border-radius: 10px;
+  color: #a39b8b;
+  font-family: var(--font-sans);
+  font-size: 14px;
+}
+
+.resetFiltersBtn {
+  margin-top: 12px;
+  background: transparent;
+  border: 1px solid rgba(212, 168, 92, 0.3);
+  color: #d4a85c;
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12.5px;
+}
+
+/* ==========================================================================
+   RESPONSIVIDADE
+   ========================================================================== */
+@media (max-width: 768px) {
+  .controlsBar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .searchBox {
+    width: 100%;
+  }
+
+  .testamentTabs {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .tabBtn {
+    flex: 1;
+    padding: 8px 6px;
+    font-size: 11.5px;
+    text-align: center;
+  }
+
+  .setupBanner {
+    flex-direction: column;
+  }
+}

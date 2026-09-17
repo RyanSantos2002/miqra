@@ -1,0 +1,144 @@
+/* ==========================================================================
+   MIQRA QUICK ACCESS COMPONENT
+   Blocos compactos, elegantes e de navegação rápida
+   ========================================================================== */
+
+.sectionContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.sectionTitle {
+  margin: 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 19px;
+  font-weight: 500;
+  color: #f2e9d5;
+  letter-spacing: -0.01em;
+}
+
+.sectionSubtitle {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: #7e7769;
+}
+
+.gridContainer {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.blockCard {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  background-color: #0f1612;
+  border: 1px solid rgba(212, 168, 92, 0.14);
+  border-radius: 9px;
+  text-decoration: none;
+  transition: all 180ms ease;
+  box-sizing: border-box;
+}
+
+.blockCard:hover {
+  background-color: #141d18;
+  border-color: rgba(212, 168, 92, 0.38);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+  text-decoration: none;
+}
+
+.iconWrapper {
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;
+  background: rgba(212, 168, 92, 0.07);
+  border: 1px solid rgba(212, 168, 92, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #d4a85c;
+  flex-shrink: 0;
+  transition: all 180ms ease;
+}
+
+.blockCard:hover .iconWrapper {
+  background: rgba(212, 168, 92, 0.14);
+  color: #e4c47a;
+  border-color: rgba(212, 168, 92, 0.45);
+}
+
+.blockInfo {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.blockTitle {
+  margin: 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: #f2e9d5;
+}
+
+.externalArrow {
+  color: #726b5d;
+  opacity: 0;
+  transform: translate(-3px, 3px);
+  transition: all 180ms ease;
+}
+
+.blockCard:hover .externalArrow {
+  opacity: 1;
+  color: #d4a85c;
+  transform: translate(0, 0);
+}
+
+.blockSubtitle {
+  margin: 3px 0 0;
+  font-family: var(--font-sans);
+  font-size: 11.5px;
+  color: #948c7b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ==========================================================================
+   RESPONSIVIDADE
+   ========================================================================== */
+@media (max-width: 1080px) {
+  .gridContainer {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .gridContainer {
+    grid-template-columns: 1fr;
+  }
+
+  .sectionHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+}
