@@ -12,11 +12,20 @@ import {
   AlertCircle,
   Clock,
   Star,
+  BookMarked,
+  Plus,
 } from 'lucide-react';
 import { getNoteForVerse, saveNote, deleteNote } from '../../../services/notes';
 import { toggleFavorite, setHighlight, removeHighlight } from '../../../services/study';
+import {
+  getMyStudies,
+  addVerseToStudy,
+  getStudiesContainingVerse,
+  createStudy,
+} from '../../../services/studies';
 import type { Note } from '../../../types/notes';
 import type { HighlightColor } from '../../../types/study';
+import type { Study } from '../../../types/studies';
 import styles from './VerseExplorerDrawer.module.css';
 
 interface VerseExplorerDrawerProps {
@@ -36,7 +45,7 @@ interface VerseExplorerDrawerProps {
   ) => void;
 }
 
-type ExplorerTab = 'note' | 'favorite' | 'references' | 'words' | 'discussions';
+type ExplorerTab = 'note' | 'studies' | 'favorite' | 'references' | 'words' | 'discussions';
 
 export const VerseExplorerDrawer: React.FC<VerseExplorerDrawerProps> = ({
   bookSlug,
@@ -56,6 +65,17 @@ export const VerseExplorerDrawer: React.FC<VerseExplorerDrawerProps> = ({
   const [content, setContent] = useState('');
   const [isFavorited, setIsFavorited] = useState<boolean>(initialFavorited);
   const [highlightColor, setHighlightColor] = useState<HighlightColor | null>(initialHighlight);
+
+  // Estados de Estudos Pessoais
+  const [userStudies, setUserStudies] = useState<Study[]>([]);
+  const [studiesContainingVerse, setStudiesContainingVerse] = useState<Set<string>>(new Set());
+  const [isLoadingStudies, setIsLoadingStudies] = useState<boolean>(false);
+  const [addingToStudyId, setAddingToStudyId] = useState<string | null>(null);
+
+  const [showCreateInline, setShowCreateInline] = useState<boolean>(false);
+  const [inlineTitle, setInlineTitle] = useState<string>('');
+  const [inlineDescription, setInlineDescription] = useState<string>('');
+  const [isCreatingInline, setIsCreatingInline] = useState<boolean>(false);
 
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
@@ -89,6 +109,33 @@ export const VerseExplorerDrawer: React.FC<VerseExplorerDrawerProps> = ({
     };
   }, [isOpen, bookSlug, chapter, verseNumber]);
 
+  // Carregar estudos do usuário e verificar quais já contêm o versículo
+  useEffect(() => {
+    if (!isOpen) return;
+
+    let isMounted = true;
+
+    Promise.all([
+      getMyStudies(),
+      getStudiesContainingVerse(bookSlug, chapter, verseNumber),
+    ])
+      .then(([studiesList, set]) => {
+        if (!isMounted) return;
+        setUserStudies(studiesList);
+        setStudiesContainingVerse(set);
+        setIsLoadingStudies(false);
+      })
+      .catch((err) => {
+        if (!isMounted) return;
+        console.error('[Miqra] Erro ao buscar estudos para o versículo:', err);
+        setIsLoadingStudies(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [isOpen, bookSlug, chapter, verseNumber]);
+
   // Fechar com a tecla Escape
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -101,6 +148,51 @@ export const VerseExplorerDrawer: React.FC<VerseExplorerDrawerProps> = ({
   }, [isOpen, onClose]);
 
   if (!isOpen) return null;
+
+  const handleAddToStudy = async (studyId: string) => {
+    if (studiesContainingVerse.has(studyId) || addingToStudyId) return;
+
+    setAddingToStudyId(studyId);
+    setErrorMessage(null);
+    try {
+      await addVerseToStudy(studyId, bookSlug, chapter, verseNumber);
+      setStudiesContainingVerse((prev) => new Set([...prev, studyId]));
+      setSuccessMessage('Versículo adicionado ao estudo com sucesso!');
+      setTimeout(() => setSuccessMessage(null), 3000);
+    } catch (err: unknown) {
+      console.error('[Miqra] Erro ao adicionar versículo ao estudo:', err);
+      setErrorMessage(err instanceof Error ? err.message : 'Falha ao adicionar versículo ao estudo.');
+    } finally {
+      setAddingToStudyId(null);
+    }
+  };
+
+  const handleCreateAndAddStudy = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!inlineTitle.trim() || isCreatingInline) return;
+
+    setIsCreatingInline(true);
+    setErrorMessage(null);
+    try {
+      const newStudy = await createStudy({
+        title: inlineTitle,
+        description: inlineDescription,
+      });
+      await addVerseToStudy(newStudy.id, bookSlug, chapter, verseNumber);
+      setUserStudies((prev) => [newStudy, ...prev]);
+      setStudiesContainingVerse((prev) => new Set([...prev, newStudy.id]));
+      setShowCreateInline(false);
+      setInlineTitle('');
+      setInlineDescription('');
+      setSuccessMessage(`Estudo "${newStudy.title}" criado e versículo adicionado!`);
+      setTimeout(() => setSuccessMessage(null), 3500);
+    } catch (err: unknown) {
+      console.error('[Miqra] Erro ao criar estudo inline:', err);
+      setErrorMessage(err instanceof Error ? err.message : 'Falha ao criar estudo.');
+    } finally {
+      setIsCreatingInline(false);
+    }
+  };
 
   const handleToggleFavorite = async () => {
     try {
@@ -274,7 +366,7 @@ export const VerseExplorerDrawer: React.FC<VerseExplorerDrawerProps> = ({
             </p>
           </div>
 
-          {/* Barra de Ações Rápidas (Favoritar & Marcação de Cor) */}
+          {/* Barra de Ações Rápidas (Favoritar, Adicionar ao Estudo & Marcação de Cor) */}
           <div className={styles.quickActionsBar}>
             <div className={styles.quickActionsRow}>
               {/* Botão de Favoritar */}
@@ -290,6 +382,17 @@ export const VerseExplorerDrawer: React.FC<VerseExplorerDrawerProps> = ({
                   stroke={isFavorited ? '#e4c47a' : 'currentColor'}
                 />
                 <span>{isFavorited ? '★ Favoritado' : '☆ Favoritar'}</span>
+              </button>
+
+              {/* Botão Adicionar ao Estudo */}
+              <button
+                type="button"
+                className={styles.studyAddBtn}
+                onClick={() => setActiveTab('studies')}
+                title="Adicionar este versículo a um estudo pessoal"
+              >
+                <BookMarked size={15} />
+                <span>📚 Adicionar ao estudo</span>
               </button>
 
               {/* Seletor de Marcação / Destaque */}
@@ -364,6 +467,15 @@ export const VerseExplorerDrawer: React.FC<VerseExplorerDrawerProps> = ({
             >
               <PenTool size={14} />
               <span>Minha Anotação</span>
+            </button>
+
+            <button
+              type="button"
+              className={`${styles.tabItem} ${activeTab === 'studies' ? styles.tabItemActive : ''}`}
+              onClick={() => setActiveTab('studies')}
+            >
+              <BookMarked size={14} />
+              <span>Meus Estudos</span>
             </button>
 
             <button
@@ -541,6 +653,149 @@ export const VerseExplorerDrawer: React.FC<VerseExplorerDrawerProps> = ({
                     </button>
                   </div>
                 </form>
+              )}
+            </section>
+          )}
+
+          {/* Aba: Meus Estudos */}
+          {activeTab === 'studies' && (
+            <section className={styles.studiesSection} aria-label="Adicionar versículo a um estudo">
+              <div className={styles.studiesIntro}>
+                <h3 className={styles.studiesIntroTitle}>
+                  Adicionar {bookName} {chapter}:{verseNumber} a:
+                </h3>
+                <p className={styles.studiesIntroText}>
+                  Selecione um dos seus estudos ou crie um novo para organizar este versículo.
+                </p>
+              </div>
+
+              {isLoadingStudies ? (
+                <div style={{ textAlign: 'center', padding: '1.5rem', color: '#8c8372', fontSize: '13px' }}>
+                  Carregando seus estudos...
+                </div>
+              ) : (
+                <>
+                  {userStudies.length > 0 ? (
+                    <div className={styles.studiesList}>
+                      {userStudies.map((s) => {
+                        const isAlreadyAdded = studiesContainingVerse.has(s.id);
+                        const isCurrentAdding = addingToStudyId === s.id;
+
+                        return (
+                          <button
+                            key={s.id}
+                            type="button"
+                            className={`${styles.studyOptionItem} ${
+                              isAlreadyAdded ? styles.studyOptionItemAdded : ''
+                            }`}
+                            onClick={() => !isAlreadyAdded && handleAddToStudy(s.id)}
+                            disabled={isAlreadyAdded || Boolean(addingToStudyId)}
+                            title={
+                              isAlreadyAdded
+                                ? 'Versículo já adicionado a este estudo'
+                                : `Adicionar versículo ao estudo ${s.title}`
+                            }
+                          >
+                            <div className={styles.studyOptionLeft}>
+                              <span
+                                className={`${styles.studyOptionRadio} ${
+                                  isAlreadyAdded ? styles.studyOptionRadioAdded : ''
+                                }`}
+                              >
+                                {isAlreadyAdded ? (
+                                  <Check size={11} strokeWidth={3} />
+                                ) : (
+                                  '○'
+                                )}
+                              </span>
+                              <div className={styles.studyOptionContent}>
+                                <h4 className={styles.studyOptionTitle}>{s.title}</h4>
+                                {s.description && (
+                                  <p className={styles.studyOptionDesc}>{s.description}</p>
+                                )}
+                              </div>
+                            </div>
+
+                            {isAlreadyAdded ? (
+                              <span className={styles.studyAddedBadge}>Já adicionado ✓</span>
+                            ) : isCurrentAdding ? (
+                              <span style={{ fontSize: '12px', color: '#d4a85c' }}>Adicionando...</span>
+                            ) : (
+                              <span style={{ fontSize: '12px', color: '#d4a85c', opacity: 0.85 }}>+ Adicionar</span>
+                            )}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  ) : (
+                    <div style={{ textAlign: 'center', padding: '1rem 0', color: '#8c8372', fontSize: '13px' }}>
+                      Você ainda não possui estudos criados.
+                    </div>
+                  )}
+
+                  {/* Formulário Inline para Criar Novo Estudo */}
+                  {showCreateInline ? (
+                    <form onSubmit={handleCreateAndAddStudy} className={styles.inlineCreateBox}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <span style={{ fontSize: '13px', fontWeight: 600, color: '#f2e9d5' }}>
+                          Novo Estudo
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => setShowCreateInline(false)}
+                          style={{ background: 'transparent', border: 'none', color: '#8c8372', cursor: 'pointer' }}
+                        >
+                          <X size={15} />
+                        </button>
+                      </div>
+
+                      <input
+                        type="text"
+                        className={styles.inlineInput}
+                        placeholder="Título do estudo *"
+                        value={inlineTitle}
+                        onChange={(e) => setInlineTitle(e.target.value)}
+                        required
+                        autoFocus
+                      />
+
+                      <input
+                        type="text"
+                        className={styles.inlineInput}
+                        placeholder="Descrição (opcional)"
+                        value={inlineDescription}
+                        onChange={(e) => setInlineDescription(e.target.value)}
+                      />
+
+                      <div className={styles.inlineActions}>
+                        <button
+                          type="button"
+                          className={styles.inlineBtnCancel}
+                          onClick={() => setShowCreateInline(false)}
+                          disabled={isCreatingInline}
+                        >
+                          Cancelar
+                        </button>
+                        <button
+                          type="submit"
+                          className={styles.inlineBtnSubmit}
+                          disabled={isCreatingInline || !inlineTitle.trim()}
+                        >
+                          {isCreatingInline ? 'Criando...' : 'Criar e Adicionar'}
+                        </button>
+                      </div>
+                    </form>
+                  ) : (
+                    <button
+                      type="button"
+                      className={styles.btnShowCreateInline}
+                      onClick={() => setShowCreateInline(true)}
+                    >
+                      <Plus size={15} />
+                      <span>Criar novo estudo</span>
+                    </button>
+                  )}
+                </>
               )}
             </section>
           )}

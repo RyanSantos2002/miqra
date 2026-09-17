@@ -10,6 +10,8 @@ import { BibleIndexPage } from '../pages/bible/BibleIndexPage/BibleIndexPage';
 import { BibleBookPage } from '../pages/bible/BibleBookPage/BibleBookPage';
 import { BibleReaderPage } from '../pages/bible/BibleReaderPage/BibleReaderPage';
 import { FavoritesPage } from '../pages/study/Favorites/FavoritesPage';
+import { StudiesListPage } from '../pages/study/StudiesList/StudiesListPage';
+import { StudyDetailPage } from '../pages/study/StudyDetail/StudyDetailPage';
 
 export const AppRoutes: React.FC = () => {
   return (
@@ -33,6 +35,9 @@ export const AppRoutes: React.FC = () => {
         <Route path="/bible/:book" element={<BibleBookPage />} />
         <Route path="/bible/:book/:chapter" element={<BibleReaderPage />} />
         <Route path="/favorites" element={<FavoritesPage />} />
+        <Route path="/studies" element={<StudiesListPage />} />
+        <Route path="/studies/:studyId" element={<StudyDetailPage />} />
+        <Route path="/my-studies" element={<Navigate to="/studies" replace />} />
       </Route>
 
       {/* Rota Fallback */}
@@ -40,3 +45,4 @@ export const AppRoutes: React.FC = () => {
     </Routes>
   );
 };
+

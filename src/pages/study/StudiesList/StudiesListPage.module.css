@@ -1,0 +1,530 @@
+/* Estilos da Página Meus Estudos */
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
+}
+
+/* Cabeçalho */
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-bottom: 2.5rem;
+}
+
+@media (min-width: 768px) {
+  .header {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+}
+
+.headerText {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.title {
+  font-family: var(--font-serif, 'Cinzel', serif);
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: #f5f3ef;
+  letter-spacing: -0.02em;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.titleIcon {
+  color: var(--color-gold-400, #d4a85c);
+}
+
+.subtitle {
+  font-size: 1.05rem;
+  color: #9a9891;
+  margin: 0;
+}
+
+.newStudyBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.4rem;
+  background: linear-gradient(135deg, #d4a85c 0%, #ba8a40 100%);
+  color: #0b120d;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(212, 168, 92, 0.25);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.newStudyBtn:hover {
+  background: linear-gradient(135deg, #e4c47a 0%, #c89647 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(212, 168, 92, 0.35);
+}
+
+/* Barra de Busca */
+.searchSection {
+  margin-bottom: 2rem;
+}
+
+.searchBox {
+  position: relative;
+  max-width: 480px;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #717068;
+  pointer-events: none;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 0.8rem 1rem 0.8rem 2.8rem;
+  background-color: rgba(20, 30, 24, 0.7);
+  border: 1px solid rgba(212, 168, 92, 0.2);
+  border-radius: 10px;
+  color: #f5f3ef;
+  font-size: 0.95rem;
+  outline: none;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(8px);
+}
+
+.searchInput::placeholder {
+  color: #717068;
+}
+
+.searchInput:focus {
+  border-color: rgba(212, 168, 92, 0.6);
+  background-color: rgba(20, 30, 24, 0.95);
+  box-shadow: 0 0 0 3px rgba(212, 168, 92, 0.12);
+}
+
+/* Grid de Estudos */
+.studiesGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 680px) {
+  .studiesGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .studiesGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Card do Estudo */
+.studyCard {
+  background: linear-gradient(180deg, rgba(24, 38, 29, 0.85) 0%, rgba(13, 22, 17, 0.95) 100%);
+  border: 1px solid rgba(212, 168, 92, 0.18);
+  border-radius: 14px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.studyCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #ba8a40 0%, #d4a85c 50%, #ba8a40 100%);
+  opacity: 0.4;
+  transition: opacity 0.2s ease;
+}
+
+.studyCard:hover {
+  transform: translateY(-3px);
+  border-color: rgba(212, 168, 92, 0.4);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6), 0 0 15px rgba(212, 168, 92, 0.1);
+}
+
+.studyCard:hover::before {
+  opacity: 1;
+}
+
+.cardTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.cardTitle {
+  font-family: var(--font-serif, 'Cinzel', serif);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #f5f3ef;
+  margin: 0;
+  line-height: 1.35;
+  word-break: break-word;
+}
+
+.cardActions {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.actionBtn {
+  background: transparent;
+  border: none;
+  color: #8c897f;
+  padding: 0.35rem;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.actionBtn:hover {
+  color: #f5f3ef;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.actionBtnDanger:hover {
+  color: #f87171;
+  background: rgba(239, 68, 68, 0.12);
+}
+
+.cardDescription {
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: #a3a199;
+  margin: 0 0 1.25rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-height: 2.85rem;
+}
+
+.cardMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  margin-bottom: 1.25rem;
+  font-size: 0.82rem;
+  color: #8c897f;
+}
+
+.refBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: #d4a85c;
+  font-weight: 500;
+}
+
+.updatedTime {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.openLink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: rgba(212, 168, 92, 0.08);
+  border: 1px solid rgba(212, 168, 92, 0.25);
+  border-radius: 8px;
+  color: #e4c47a;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.openLink:hover {
+  background: rgba(212, 168, 92, 0.16);
+  border-color: rgba(212, 168, 92, 0.5);
+  color: #f5f3ef;
+  transform: translateX(2px);
+}
+
+/* Estado Vazio */
+.emptyState {
+  text-align: center;
+  padding: 4.5rem 1.5rem;
+  background: rgba(16, 26, 20, 0.6);
+  border: 1px dashed rgba(212, 168, 92, 0.25);
+  border-radius: 16px;
+  max-width: 600px;
+  margin: 2rem auto 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.emptyIconWrapper {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: rgba(212, 168, 92, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #d4a85c;
+  margin-bottom: 1.5rem;
+}
+
+.emptyTitle {
+  font-family: var(--font-serif, 'Cinzel', serif);
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #f5f3ef;
+  margin: 0 0 0.75rem;
+}
+
+.emptySubtitle {
+  font-size: 1rem;
+  color: #9a9891;
+  margin: 0 0 1.75rem;
+  max-width: 440px;
+  line-height: 1.5;
+}
+
+/* Loading & Error */
+.centerStatus {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 5rem 1rem;
+  gap: 1rem;
+  color: #9a9891;
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+  color: #d4a85c;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Modais */
+.modalBackdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.modalContent {
+  background: #111a14;
+  border: 1px solid rgba(212, 168, 92, 0.3);
+  border-radius: 14px;
+  width: 100%;
+  max-width: 520px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+  animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.modalTitle {
+  font-family: var(--font-serif, 'Cinzel', serif);
+  font-size: 1.3rem;
+  color: #f5f3ef;
+  margin: 0;
+}
+
+.modalCloseBtn {
+  background: transparent;
+  border: none;
+  color: #8c897f;
+  cursor: pointer;
+  padding: 0.35rem;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.modalCloseBtn:hover {
+  color: #f5f3ef;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.modalForm {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.formLabel {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: #d4a85c;
+}
+
+.formInput,
+.formTextarea {
+  background: rgba(20, 32, 25, 0.8);
+  border: 1px solid rgba(212, 168, 92, 0.2);
+  border-radius: 8px;
+  padding: 0.75rem 0.9rem;
+  color: #f5f3ef;
+  font-size: 0.95rem;
+  outline: none;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.formInput:focus,
+.formTextarea:focus {
+  border-color: rgba(212, 168, 92, 0.6);
+  background: rgba(20, 32, 25, 1);
+  box-shadow: 0 0 0 3px rgba(212, 168, 92, 0.1);
+}
+
+.formTextarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.modalActions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.cancelBtn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #c7c5bc;
+  padding: 0.65rem 1.1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cancelBtn:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #f5f3ef;
+}
+
+.submitBtn {
+  background: linear-gradient(135deg, #d4a85c 0%, #ba8a40 100%);
+  border: none;
+  color: #0b120d;
+  font-weight: 600;
+  padding: 0.65rem 1.3rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.submitBtn:hover {
+  background: linear-gradient(135deg, #e4c47a 0%, #c89647 100%);
+}
+
+.submitBtnDanger {
+  background: #dc2626;
+  border: none;
+  color: #ffffff;
+  font-weight: 600;
+  padding: 0.65rem 1.3rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.submitBtnDanger:hover {
+  background: #ef4444;
+}
+
+.deleteWarningText {
+  color: #c7c5bc;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  margin: 0;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}

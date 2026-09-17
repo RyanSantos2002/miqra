@@ -631,6 +631,223 @@
   line-height: 1.5;
 }
 
+/* Adicionar ao Estudo */
+.studyAddBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  color: #d4a85c;
+  background: rgba(212, 168, 92, 0.08);
+  border: 1px solid rgba(212, 168, 92, 0.28);
+  cursor: pointer;
+  transition: all 160ms ease;
+}
+
+.studyAddBtn:hover {
+  background: rgba(212, 168, 92, 0.18);
+  border-color: rgba(212, 168, 92, 0.5);
+  color: #f5f3ef;
+}
+
+.studiesSection {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.studiesIntro {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.studiesIntroTitle {
+  font-family: Georgia, serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #f2e9d5;
+  margin: 0;
+}
+
+.studiesIntroText {
+  font-size: 12px;
+  color: #8c8372;
+  margin: 0;
+}
+
+.studiesList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.studyOptionItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  background: rgba(16, 26, 20, 0.7);
+  border: 1px solid rgba(212, 168, 92, 0.2);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 150ms ease;
+  text-align: left;
+  width: 100%;
+}
+
+.studyOptionItem:hover:not(:disabled) {
+  background: rgba(24, 38, 29, 0.95);
+  border-color: rgba(212, 168, 92, 0.45);
+  transform: translateX(2px);
+}
+
+.studyOptionItemAdded {
+  border-color: rgba(104, 182, 132, 0.35);
+  background: rgba(16, 32, 22, 0.5);
+  cursor: default;
+}
+
+.studyOptionLeft {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+}
+
+.studyOptionRadio {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(212, 168, 92, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.studyOptionRadioAdded {
+  border-color: #68b684;
+  background: rgba(104, 182, 132, 0.15);
+  color: #68b684;
+}
+
+.studyOptionContent {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow: hidden;
+}
+
+.studyOptionTitle {
+  font-family: Georgia, serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #f2e9d5;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.studyOptionDesc {
+  font-size: 11px;
+  color: #8c8372;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.studyAddedBadge {
+  font-size: 11px;
+  font-weight: 600;
+  color: #68b684;
+  background: rgba(104, 182, 132, 0.12);
+  padding: 3px 7px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.inlineCreateBox {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px;
+  background: rgba(20, 32, 25, 0.85);
+  border: 1px dashed rgba(212, 168, 92, 0.35);
+  border-radius: 8px;
+  margin-top: 4px;
+}
+
+.inlineInput {
+  background: rgba(12, 18, 15, 0.9);
+  border: 1px solid rgba(212, 168, 92, 0.25);
+  border-radius: 6px;
+  padding: 8px 10px;
+  color: #f2e9d5;
+  font-size: 13px;
+  outline: none;
+}
+
+.inlineInput:focus {
+  border-color: rgba(212, 168, 92, 0.6);
+}
+
+.inlineActions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.inlineBtnCancel {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #a8a090;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.inlineBtnSubmit {
+  background: linear-gradient(135deg, #d4a85c 0%, #ba8a40 100%);
+  border: none;
+  color: #0b120d;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.btnShowCreateInline {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: 1px dashed rgba(212, 168, 92, 0.3);
+  color: #d4a85c;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 150ms ease;
+  justify-content: center;
+}
+
+.btnShowCreateInline:hover {
+  background: rgba(212, 168, 92, 0.08);
+  border-color: rgba(212, 168, 92, 0.6);
+}
+
 /* Responsividade */
 @media (max-width: 768px) {
   .drawer {

@@ -50,7 +50,7 @@ const navSections: NavSection[] = [
   {
     group: 'ESTUDO',
     items: [
-      { label: 'Meus estudos', icon: BookMarked, href: '/my-studies' },
+      { label: 'Meus estudos', icon: BookMarked, href: '/studies' },
       { label: 'Anotações', icon: PenLine, href: '/notes' },
       { label: 'Favoritos', icon: BookmarkCheck, href: '/favorites' },
     ],
@@ -98,12 +98,12 @@ export const Sidebar: React.FC<SidebarProps> = ({ user, isOpen = false, onClose 
               <img
                 src="/assets/logo-icon-exact.png"
                 alt="Símbolo Miqra"
-                className={styles.logoImg}
+                className={styles.brandLogoIcon}
               />
             </div>
-            <div className={styles.brandText}>
-              <span className={styles.brandName}>Miqra</span>
-              <span className={styles.brandTagline}>Leia. Explore. Compreenda.</span>
+            <div className={styles.brandTextGroup}>
+              <span className={styles.brandName}>MIQRA</span>
+              <span className={styles.brandSubtitle}>ESTUDO BÍBLICO</span>
             </div>
           </Link>
 
@@ -126,7 +126,12 @@ export const Sidebar: React.FC<SidebarProps> = ({ user, isOpen = false, onClose 
               <ul className={styles.itemsList}>
                 {section.items.map((item) => {
                   const Icon = item.icon;
-                  const isActive = location.pathname === item.href || (item.href === '/home' && location.pathname === '/');
+                  const isActive =
+                    location.pathname === item.href ||
+                    (item.href === '/home' && location.pathname === '/') ||
+                    (item.href === '/studies' &&
+                      (location.pathname === '/studies' ||
+                        location.pathname.startsWith('/studies/')));
 
                   return (
                     <li key={item.label}>

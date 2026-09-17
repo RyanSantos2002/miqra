@@ -75,7 +75,10 @@ export const BibleReaderPage: React.FC = () => {
         if (location.hash) {
           setTimeout(() => {
             const cleanId = location.hash.replace('#', '');
-            const targetEl = document.getElementById(cleanId);
+            let targetEl = document.getElementById(cleanId);
+            if (!targetEl && cleanId.startsWith('verse-')) {
+              targetEl = document.getElementById(`v${cleanId.replace('verse-', '')}`);
+            }
             if (targetEl) {
               targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
