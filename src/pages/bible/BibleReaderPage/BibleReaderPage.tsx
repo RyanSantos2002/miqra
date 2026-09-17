@@ -8,11 +8,15 @@ import {
   List,
   AlertTriangle,
   RefreshCw,
+  PenTool,
 } from 'lucide-react';
 import { DashboardLayout } from '../../../layouts/DashboardLayout/DashboardLayout';
+import { VerseExplorerDrawer } from '../../../components/study/VerseExplorer/VerseExplorerDrawer';
 import { getChapter } from '../../../services/bible';
+import { getNotesForChapter } from '../../../services/notes';
 import { isSupabaseConfigured } from '../../../lib/supabase';
-import type { BibleChapterData } from '../../../types/bible';
+import type { BibleChapterData, NormalizedVerse } from '../../../types/bible';
+import type { Note } from '../../../types/notes';
 import styles from './BibleReaderPage.module.css';
 
 export const BibleReaderPage: React.FC = () => {
@@ -23,6 +27,8 @@ export const BibleReaderPage: React.FC = () => {
   const selectedVersion = 'nvi';
 
   const [chapterData, setChapterData] = useState<BibleChapterData | null>(null);
+  const [chapterNotes, setChapterNotes] = useState<Record<number, Note>>({});
+  const [selectedVerse, setSelectedVerse] = useState<NormalizedVerse | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -41,9 +47,14 @@ export const BibleReaderPage: React.FC = () => {
       }
 
       try {
-        const data = await getChapter(bookSlug, chapterNumber, selectedVersion);
+        const [data, notesMap] = await Promise.all([
+          getChapter(bookSlug, chapterNumber, selectedVersion),
+          getNotesForChapter(bookSlug, chapterNumber),
+        ]);
         if (!isMounted) return;
         setChapterData(data);
+        setChapterNotes(notesMap);
+        setSelectedVerse(null);
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } catch (err: unknown) {
         if (!isMounted) return;
@@ -69,9 +80,13 @@ export const BibleReaderPage: React.FC = () => {
     if (!bookSlug || isNaN(chapterNumber)) return;
     setIsLoading(true);
     setErrorMessage(null);
-    getChapter(bookSlug, chapterNumber, selectedVersion)
-      .then((data) => {
+    Promise.all([
+      getChapter(bookSlug, chapterNumber, selectedVersion),
+      getNotesForChapter(bookSlug, chapterNumber),
+    ])
+      .then(([data, notesMap]) => {
         setChapterData(data);
+        setChapterNotes(notesMap);
         window.scrollTo({ top: 0, behavior: 'smooth' });
       })
       .catch((err) => {
@@ -79,6 +94,18 @@ export const BibleReaderPage: React.FC = () => {
         setErrorMessage(`Não foi possível carregar o capítulo ${chapterNumber} de ${bookSlug}.`);
       })
       .finally(() => setIsLoading(false));
+  };
+
+  const handleNoteChange = (verseNum: number, updatedNote: Note | null) => {
+    setChapterNotes((prev) => {
+      const next = { ...prev };
+      if (updatedNote) {
+        next[verseNum] = updatedNote;
+      } else {
+        delete next[verseNum];
+      }
+      return next;
+    });
   };
 
   return (
@@ -156,12 +183,38 @@ export const BibleReaderPage: React.FC = () => {
                   Nenhum versículo registrado para este capítulo no banco.
                 </p>
               ) : (
-                chapterData.verses.map((verse) => (
-                  <p key={verse.number} className={styles.verseParagraph} id={`v${verse.number}`}>
-                    <sup className={styles.verseNumber}>{verse.number}</sup>
-                    <span className={styles.verseText}>{verse.text}</span>
-                  </p>
-                ))
+                chapterData.verses.map((verse) => {
+                  const hasNote = Boolean(chapterNotes[verse.number]);
+                  const isSelected = selectedVerse?.number === verse.number;
+
+                  return (
+                    <p
+                      key={verse.number}
+                      className={`${styles.verseParagraph} ${isSelected ? styles.verseSelected : ''} ${hasNote ? styles.verseHasNote : ''}`}
+                      id={`v${verse.number}`}
+                      onClick={() => setSelectedVerse(verse)}
+                      role="button"
+                      tabIndex={0}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault();
+                          setSelectedVerse(verse);
+                        }
+                      }}
+                      title={`Clique para explorar o versículo ${verse.number}${hasNote ? ' (Possui anotação)' : ''}`}
+                    >
+                      <sup className={styles.verseNumber}>
+                        {verse.number}
+                        {hasNote && (
+                          <span className={styles.verseNoteIndicator} title="Possui anotação pessoal">
+                            <PenTool size={9} />
+                          </span>
+                        )}
+                      </sup>
+                      <span className={styles.verseText}>{verse.text}</span>
+                    </p>
+                  );
+                })
               )}
             </section>
 
@@ -201,6 +254,21 @@ export const BibleReaderPage: React.FC = () => {
               </div>
             </footer>
           </article>
+        )}
+
+        {/* Painel Drawer de Exploração do Versículo */}
+        {selectedVerse && chapterData && (
+          <VerseExplorerDrawer
+            key={`${bookSlug}-${chapterData.chapter}-${selectedVerse.number}`}
+            isOpen={Boolean(selectedVerse)}
+            bookSlug={bookSlug || ''}
+            bookName={chapterData.bookName}
+            chapter={chapterData.chapter}
+            verseNumber={selectedVerse.number}
+            verseText={selectedVerse.text}
+            onClose={() => setSelectedVerse(null)}
+            onNoteChange={handleNoteChange}
+          />
         )}
       </div>
     </DashboardLayout>

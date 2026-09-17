@@ -1,0 +1,560 @@
+/* ==========================================================================
+   MIQRA VERSE EXPLORER DRAWER
+   Estética de gabinete de estudo bíblico, manuscrito e ouro envelhecido
+   ========================================================================== */
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(4px);
+  z-index: 90;
+  animation: fadeIn 200ms ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 520px;
+  max-width: 100vw;
+  background: #0b110e;
+  border-left: 1px solid rgba(212, 168, 92, 0.22);
+  box-shadow: -16px 0 48px rgba(0, 0, 0, 0.75);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  animation: slideInRight 260ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* Cabeçalho */
+.drawerHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid rgba(212, 168, 92, 0.12);
+  background: rgba(12, 18, 15, 0.8);
+}
+
+.headerMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.headerLabel {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 600;
+  color: #c9ad72;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.headerReference {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 22px;
+  font-weight: 500;
+  color: #f2e9d5;
+  margin: 0;
+}
+
+.closeButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: transparent;
+  border: 1px solid rgba(212, 168, 92, 0.15);
+  color: #a8a090;
+  cursor: pointer;
+  transition: all 160ms ease;
+}
+
+.closeButton:hover {
+  background: rgba(212, 168, 92, 0.1);
+  color: #f2e9d5;
+  border-color: rgba(212, 168, 92, 0.35);
+}
+
+/* Área de Rolagem do Conteúdo */
+.drawerBody {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.drawerBody::-webkit-scrollbar {
+  width: 5px;
+}
+
+.drawerBody::-webkit-scrollbar-thumb {
+  background: rgba(212, 168, 92, 0.18);
+  border-radius: 4px;
+}
+
+/* Card do Versículo Bíblico */
+.verseCard {
+  background: linear-gradient(180deg, rgba(21, 30, 25, 0.6) 0%, rgba(11, 17, 14, 0.85) 100%);
+  border: 1px solid rgba(212, 168, 92, 0.22);
+  border-radius: 10px;
+  padding: 20px 22px;
+  position: relative;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
+}
+
+.verseCardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.verseBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  color: #d4a85c;
+  background: rgba(212, 168, 92, 0.12);
+  padding: 3px 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(212, 168, 92, 0.2);
+}
+
+.versionTag {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  color: #726b5d;
+  letter-spacing: 0.1em;
+}
+
+.verseTextContent {
+  margin: 0;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 20px;
+  line-height: 1.7;
+  color: #f2e9d5;
+  font-style: normal;
+}
+
+/* Barra de Abas / Ações */
+.tabsNav {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  border-bottom: 1px solid rgba(212, 168, 92, 0.1);
+}
+
+.tabsNav::-webkit-scrollbar {
+  height: 3px;
+}
+
+.tabsNav::-webkit-scrollbar-thumb {
+  background: rgba(212, 168, 92, 0.15);
+}
+
+.tabItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 7px;
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  font-weight: 500;
+  color: #8c8372;
+  background: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 150ms ease;
+}
+
+.tabItem:hover {
+  color: #f2e9d5;
+  background: rgba(212, 168, 92, 0.05);
+}
+
+.tabItemActive {
+  background: rgba(212, 168, 92, 0.12);
+  border-color: rgba(212, 168, 92, 0.3);
+  color: #e4c47a;
+}
+
+/* Área de Anotação */
+.noteSection {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sectionTitleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sectionTitle {
+  font-family: Georgia, serif;
+  font-size: 17px;
+  font-weight: 500;
+  color: #f2e9d5;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sectionPrompt {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: #a8a090;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Editor de Texto */
+.textareaWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.noteTextarea {
+  width: 100%;
+  min-height: 140px;
+  padding: 14px 16px;
+  background: rgba(6, 11, 8, 0.85);
+  border: 1px solid rgba(150, 115, 66, 0.45);
+  border-radius: 8px;
+  color: #f2e9d5;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.6;
+  resize: vertical;
+  box-sizing: border-box;
+  outline: none;
+  transition: all 160ms ease;
+}
+
+.noteTextarea::placeholder {
+  color: #555045;
+}
+
+.noteTextarea:focus {
+  border-color: #d4a85c;
+  background: rgba(8, 14, 10, 0.95);
+  box-shadow: 0 0 0 2px rgba(212, 168, 92, 0.15);
+}
+
+.editorActionsRow {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.btnCancel {
+  background: transparent;
+  border: 1px solid rgba(212, 168, 92, 0.2);
+  color: #a8a090;
+  border-radius: 6px;
+  padding: 9px 16px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.btnCancel:hover {
+  background: rgba(212, 168, 92, 0.08);
+  color: #f2e9d5;
+}
+
+.btnSave {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: linear-gradient(180deg, #d8ac67 0%, #c4944b 45%, #b6853e 100%);
+  border: 1px solid rgba(245, 220, 155, 0.4);
+  border-radius: 6px;
+  padding: 9px 20px;
+  color: #1a140a;
+  font-family: Georgia, serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 3px 14px rgba(212, 168, 92, 0.22);
+  transition: all 160ms ease;
+}
+
+.btnSave:hover:not(:disabled) {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+  box-shadow: 0 5px 18px rgba(212, 168, 92, 0.32);
+}
+
+.btnSave:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Visualização da Nota Salva */
+.savedNoteCard {
+  background: rgba(14, 21, 17, 0.7);
+  border: 1px solid rgba(212, 168, 92, 0.25);
+  border-radius: 8px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.savedNoteContent {
+  color: #f2e9d5;
+  font-family: var(--font-sans);
+  font-size: 14.5px;
+  line-height: 1.65;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.savedNoteFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 12px;
+  border-top: 1px solid rgba(212, 168, 92, 0.1);
+  font-size: 11.5px;
+  color: #726b5d;
+}
+
+.noteTimestamp {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.savedNoteActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btnEdit {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(212, 168, 92, 0.1);
+  border: 1px solid rgba(212, 168, 92, 0.25);
+  border-radius: 5px;
+  color: #e4c47a;
+  padding: 5px 10px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.btnEdit:hover {
+  background: rgba(212, 168, 92, 0.2);
+  color: #f2e9d5;
+}
+
+.btnDelete {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: transparent;
+  border: 1px solid rgba(224, 98, 85, 0.25);
+  border-radius: 5px;
+  color: #e06255;
+  padding: 5px 10px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.btnDelete:hover {
+  background: rgba(224, 98, 85, 0.12);
+  border-color: rgba(224, 98, 85, 0.5);
+}
+
+/* Confirmação de Exclusão */
+.deleteConfirmBox {
+  background: rgba(26, 12, 12, 0.85);
+  border: 1px solid rgba(224, 98, 85, 0.35);
+  border-radius: 7px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.deleteConfirmText {
+  color: #e8a8a4;
+  font-size: 12.5px;
+  margin: 0;
+}
+
+.deleteConfirmActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.btnConfirmDelete {
+  background: #c54238;
+  border: none;
+  border-radius: 5px;
+  color: #ffffff;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.btnCancelDelete {
+  background: transparent;
+  border: 1px solid rgba(212, 168, 92, 0.2);
+  border-radius: 5px;
+  color: #a8a090;
+  padding: 6px 12px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+/* Banners de Mensagem */
+.successBanner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  background-color: rgba(104, 182, 132, 0.12);
+  border: 1px solid rgba(104, 182, 132, 0.3);
+  border-radius: 6px;
+  color: #68b684;
+  font-size: 13px;
+}
+
+.errorBanner {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px 14px;
+  background-color: rgba(224, 98, 85, 0.12);
+  border: 1px solid rgba(224, 98, 85, 0.35);
+  border-radius: 6px;
+  color: #e06255;
+  font-size: 12.5px;
+}
+
+.spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(26, 20, 10, 0.3);
+  border-top-color: #1a140a;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Placeholder para Abas Futuras */
+.placeholderCard {
+  background: rgba(12, 18, 15, 0.6);
+  border: 1px dashed rgba(212, 168, 92, 0.22);
+  border-radius: 8px;
+  padding: 28px 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.placeholderIcon {
+  color: #d4a85c;
+  opacity: 0.8;
+  margin-bottom: 4px;
+}
+
+.placeholderTitle {
+  font-family: Georgia, serif;
+  font-size: 16px;
+  color: #f2e9d5;
+  margin: 0;
+}
+
+.placeholderText {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: #8c8372;
+  max-width: 320px;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .drawer {
+    top: auto;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    max-height: 88vh;
+    border-left: none;
+    border-top: 1px solid rgba(212, 168, 92, 0.3);
+    border-radius: 18px 18px 0 0;
+    animation: slideInUp 260ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes slideInUp {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  .drawerHeader {
+    padding: 16px 20px;
+  }
+
+  .drawerBody {
+    padding: 18px;
+  }
+}
